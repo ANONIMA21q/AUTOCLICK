@@ -30,16 +30,19 @@ ToggleButton.TextScaled = true
 local isAutoClickEnabled = false
 local isCtrlHeld = false
 
+-- =====================================================
+-- 🔥
+ AUTO CLICK CLICA ONDE O MOUSE ESTÁ APONTANDO
+-- =====================================================
 local function simulateClick()
-    local viewport = workspace.CurrentCamera.ViewportSize
-    local center = Vector2.new(viewport.X/2, viewport.Y/2)
+    local mousePos = UserInputService:GetMouseLocation()
 
-    VirtualInputManager:SendMouseButtonEvent(center.X, center.Y, 0, true, game, 0)
+    VirtualInputManager:SendMouseButtonEvent(mousePos.X, mousePos.Y, 0, true, game, 0)
     task.wait(0.0000001)
-    VirtualInputManager:SendMouseButtonEvent(center.X, center.Y, 0, false, game, 0)
+    VirtualInputManager:SendMouseButtonEvent(mousePos.X, mousePos.Y, 0, false, game, 0)
 end
 
--- AUTO CLICK LOOP: depende do botão no painel + CTRL segurado
+-- AUTO CLICK LOOP (depende do botão + CTRL segurado)
 task.spawn(function()
     while true do
         if isAutoClickEnabled and isCtrlHeld then
