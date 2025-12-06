@@ -136,23 +136,17 @@ UserInputService.InputEnded:Connect(function(input)
 end)
 
 -- =====================================================
--- TRIPLE CLICK LEFT + RIGHT TO OPEN PANEL
+-- TECLA INS PARA ABRIR / FECHAR O PAINEL
 -- =====================================================
 
-local comboCount = 0
-local lastClick = 0
+local UserInputService = game:GetService("UserInputService")
 
-UserInputService.InputBegan:Connect(function()
-    local t = tick()
-    if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)
-        and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
+UserInputService.InputBegan:Connect(function(input, gp)
+    if gp then return end  -- ignora se veio de GUI
 
-        if t - lastClick <= 0.5 then comboCount += 1 else comboCount = 1 end
-        lastClick = t
-
-        if comboCount >= 3 then
-            Panel.Visible = not Panel.Visible
-            comboCount = 0
-        end
+    -- Detecta a tecla Insert (INS)
+    if input.KeyCode == Enum.KeyCode.Insert then
+        Panel.Visible = not Panel.Visible
     end
 end)
+
